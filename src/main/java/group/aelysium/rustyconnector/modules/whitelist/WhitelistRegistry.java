@@ -57,7 +57,7 @@ public class WhitelistRegistry implements Module, ModuleHolder<Whitelist> {
     public @Nullable Component details() {
         return join(
             JoinConfiguration.newlines(),
-            RC.Lang("rustyconnector-keyValue").generate("Available Whitelists", String.join(", ", this.whitelists.modules().keySet()))
+            RC.Lang("rcm-whitelistRegistry-details-availableWhitelists").generate(this.whitelists.modules().keySet())
         );
     }
     
@@ -65,6 +65,7 @@ public class WhitelistRegistry implements Module, ModuleHolder<Whitelist> {
         @Override
         public void bind(@NotNull ProxyKernel kernel, @NotNull WhitelistRegistry instance) {
             try {
+                RC.Lang().registerLangNodes(WhitelistLang.class);
                 kernel.fetchModule("EventManager").onStart(e -> {
                     ((EventManager) e).listen(OnFamilyPreConnect.class);
                     ((EventManager) e).listen(OnProxyPreConnect.class);

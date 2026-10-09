@@ -121,22 +121,12 @@ public class Whitelist implements Module {
     public @Nullable Component details() {
         return join(
             JoinConfiguration.newlines(),
-            RC.Lang("rustyconnector-keyValue").generate("Name", this.name),
-            RC.Lang("rustyconnector-keyValue").generate("Is Blacklist", this.invert),
-            RC.Lang("rustyconnector-keyValue").generate("Deny Message", this.denyMessage),
-            RC.Lang("rustyconnector-keyValue").generate("Bypass Permission", this.permission ? this.permission() : text("Disabled", DARK_GRAY)),
-            RC.Lang("rustyconnector-keyValue").generate("Usernames", (
-                this.usernames().isEmpty() ?
-                    text("There are no targeted usernames.", DARK_GRAY)
-                    :
-                    text(String.join(", ", this.usernames().stream().toList()), BLUE)
-            )),
-            RC.Lang("rustyconnector-keyValue").generate("IDs", (
-                this.uuids().isEmpty() ?
-                    text("There are no targeted ids.", DARK_GRAY)
-                    :
-                    text(String.join(", ", this.uuids().stream().map(Object::toString).toList()), BLUE)
-            ))
+            RC.Lang("rcm-whitelist-details-name").generate(this.name),
+            RC.Lang("rcm-whitelist-details-isBlacklist").generate(this.invert),
+            RC.Lang("rcm-whitelist-details-denyMessage").generate(this.denyMessage),
+            RC.Lang("rcm-whitelist-details-bypassPermission").generate(this.permission, this.permission()),
+            RC.Lang("rcm-whitelist-details-usernames").generate(this.usernames()),
+            RC.Lang("rcm-whitelist-details-ids").generate(this.uuids())
         );
     }
 }
