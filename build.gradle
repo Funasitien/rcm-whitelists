@@ -18,12 +18,12 @@ repositories {
     mavenCentral()
     maven { url = "https://repo.papermc.io/repository/maven-public/" }
     maven { url = "https://oss.sonatype.org/content/groups/public/" }
-    maven { url = "https://maven.mrnavastar.me/snapshots/" }
-    maven { url = "https://maven.mrnavastar.me/releases/" }
+    maven { url = "https://java.funa.dev/snapshots/" }
+    maven { url = "https://java.funa.dev/releases/" }
 }
 
 dependencies {
-    compileOnly 'group.aelysium.rustyconnector:core:0.9.1'
+    compileOnly 'group.aelysium.rustyconnector:core:' + rustyconnector_version
     compileOnly 'net.kyori:adventure-api:4.17.0'
     compileOnly 'org.jetbrains:annotations:24.1.0'
 }
