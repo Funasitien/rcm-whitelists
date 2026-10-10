@@ -2,8 +2,10 @@ package group.aelysium.rustyconnector.modules.whitelist;
 
 import group.aelysium.rustyconnector.RC;
 import group.aelysium.rustyconnector.common.modules.Module;
+import group.aelysium.rustyconnector.common.modules.stats.RustyContext;
 import group.aelysium.rustyconnector.proxy.Permission;
 import group.aelysium.rustyconnector.proxy.player.Player;
+import group.aelysium.rustyconnector.shaded.dev.faststats.Metrics;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +29,9 @@ public class Whitelist implements Module {
     private final boolean permission;
     private final String denyMessage;
     private final boolean invert;
+    private final RustyContext context = new RustyContext.Factory(this, "ef0e0f61dafa1211714e820db2b26285")
+            .metrics(Metrics.Factory::create)
+            .create();
     protected Whitelist(
             @NotNull String name,
             @NotNull Set<String> ids,
@@ -41,6 +46,7 @@ public class Whitelist implements Module {
         this.permission = permission;
         this.invert = inverted;
         this.denyMessage = denyMessage;
+        this.context.ready();
     }
 
     /**
@@ -114,9 +120,10 @@ public class Whitelist implements Module {
     @Override
     public void close() throws Exception {
         this.ids.clear();
+        this.context.shutdown();
         this.usernames.clear();
     }
-    
+
     @Override
     public @Nullable Component details() {
         return join(
